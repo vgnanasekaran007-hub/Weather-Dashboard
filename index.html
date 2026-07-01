@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A beautiful Weather Dashboard that displays live weather data for any city worldwide." />
+  <title>Weather Dashboard — Live City Weather</title>
+
+  <!-- Google Fonts: Inter for clean modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Our stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Background animated blobs for visual flair ===== -->
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- ===== Main Container ===== -->
+  <main class="container">
+
+    <!-- Header / Branding -->
+    <header class="header">
+      <div class="logo">
+        <!-- Inline SVG cloud icon -->
+        <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M48 44H18a14 14 0 0 1-1.2-27.96A18 18 0 0 1 52 22a12 12 0 0 1-4 22Z" fill="url(#cloud-grad)" opacity="0.9"/>
+          <defs>
+            <linearGradient id="cloud-grad" x1="10" y1="16" x2="52" y2="44" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#60a5fa"/>
+              <stop offset="1" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1>Weather Dashboard</h1>
+      </div>
+      <p class="tagline">Search any city for real-time weather conditions</p>
+    </header>
+
+    <!-- ===== Search Section ===== -->
+    <section class="search-section" aria-label="City search">
+      <form id="search-form" class="search-form" autocomplete="off">
+        <div class="search-input-wrapper">
+          <!-- Magnifying glass icon inside input -->
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="text"
+            id="city-input"
+            class="search-input"
+            placeholder="Enter city name…"
+            aria-label="City name"
+          />
+        </div>
+        <button type="submit" id="search-btn" class="search-btn">
+          Search
+        </button>
+      </form>
+    </section>
+
+    <!-- ===== Loading Indicator (hidden by default) ===== -->
+    <div id="loader" class="loader hidden" aria-live="polite">
+      <div class="spinner"></div>
+      <span>Fetching weather data…</span>
+    </div>
+
+    <!-- ===== Error Message (hidden by default) ===== -->
+    <div id="error-message" class="error-card hidden" role="alert">
+      <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p id="error-text"></p>
+    </div>
+
+    <!-- ===== Weather Result Card (hidden by default) ===== -->
+    <section id="weather-card" class="weather-card hidden" aria-label="Weather results">
+
+      <!-- Top row: City + Icon -->
+      <div class="weather-header">
+        <div class="city-info">
+          <h2 id="city-name" class="city-name"></h2>
+          <p id="weather-description" class="weather-description"></p>
+        </div>
+        <img id="weather-icon" class="weather-icon" src="" alt="Weather icon" />
+      </div>
+
+      <!-- Large temperature display -->
+      <div class="temp-display">
+        <span id="temperature" class="temp-value"></span>
+        <span class="temp-unit">°C</span>
+      </div>
+
+      <!-- Detail cards grid -->
+      <div class="details-grid">
+
+        <!-- Feels Like -->
+        <div class="detail-card">
+          <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0Z"/>
+          </svg>
+          <div class="detail-info">
+            <span class="detail-label">Feels Like</span>
+            <span id="feels-like" class="detail-value"></span>
+          </div>
+        </div>
+
+        <!-- Humidity -->
+        <div class="detail-card">
+          <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/>
+          </svg>
+          <div class="detail-info">
+            <span class="detail-label">Humidity</span>
+            <span id="humidity" class="detail-value"></span>
+          </div>
+        </div>
+
+        <!-- Wind Speed -->
+        <div class="detail-card">
+          <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+          </svg>
+          <div class="detail-info">
+            <span class="detail-label">Wind Speed</span>
+            <span id="wind-speed" class="detail-value"></span>
+          </div>
+        </div>
+
+        <!-- Pressure -->
+        <div class="detail-card">
+          <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <div class="detail-info">
+            <span class="detail-label">Pressure</span>
+            <span id="pressure" class="detail-value"></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Footer / Credits ===== -->
+    <footer class="footer">
+      <div class="footer-divider"></div>
+      <div class="footer-content">
+        <p class="footer-name">Built by <strong>Gnanasekaran V</strong></p>
+        <div class="footer-links">
+          <a href="mailto:v.gnanasekaran007@gmail.com" class="footer-link" id="footer-email">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            v.gnanasekaran007@gmail.com
+          </a>
+          <a href="https://github.com/vgnanasekaran007-hub" target="_blank" rel="noopener noreferrer" class="footer-link" id="footer-github">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Our JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
