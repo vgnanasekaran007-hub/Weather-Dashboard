@@ -19,7 +19,7 @@ A modern, responsive Weather Dashboard that fetches **live weather data** for an
 - ⏳ **Loading State** — Animated spinner while fetching data
 - ❌ **Error Handling** — Graceful handling of:
   - Empty input validation
-  - Invalid city names (404)
+  - Invalid city names (4
   - Invalid API key (401)
   - Network connection err
 - 📱 **Fully Responsive** — Works seamlessly on mobile, tablet, and desktop
