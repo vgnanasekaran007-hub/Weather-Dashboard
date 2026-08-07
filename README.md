@@ -17,11 +17,6 @@ A modern, responsive Weather Dashboard that fetches **live weather data** for an
 - 💨 **Wind Speed** — Wind speed in m/s
 - 🔄 **Atmospheric Pressure** — Pressure in hPa
 - ⏳ **Loading State** — Animated spinner while fetching data
-- ❌ **Error Handling** — Graceful handling of:
-  - Empty input validation
-  - Invalid city names (4
-  - Invalid API key
-  - Network conne
 - 📱 **Fully Responsive** — Works seamlessly on mobile, tablet, and desktop
 - 🎨 **Glassmorphism UI** — Premium dark theme with animated background blobs
 
