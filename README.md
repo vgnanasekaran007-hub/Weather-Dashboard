@@ -21,7 +21,7 @@ A modern, responsive Weather Dashboard that fetches **live weather data** for an
   - Empty input validation
   - Invalid city names (404)
   - Invalid API key (401)
-  - Network connection error
+  - Network connection err
 - 📱 **Fully Responsive** — Works seamlessly on mobile, tablet, and desktop
 - 🎨 **Glassmorphism UI** — Premium dark theme with animated background blobs
 
