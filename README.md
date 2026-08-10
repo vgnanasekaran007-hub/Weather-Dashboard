@@ -123,7 +123,7 @@ This project uses the **OpenWeatherMap Current Weather API**.
 ## 📸 Screenshots
 
 ### 🔍 Search View
-The clean dashboard interface with a city search bar and gradient background with a
+The clean dashboard interface with a city search bar and gradient background with
 
 ### 🌤️ Weather Results
 After searching, the weather card slides up showing:
