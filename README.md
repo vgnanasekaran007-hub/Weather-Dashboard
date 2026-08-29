@@ -129,7 +129,7 @@ After searching, the weather card slides up showing:
 - City name & country
 - Animated weather icon
 - Large temperature display
-- Detail cards for Feels Like, Humidity, Wind Speed, and Pressure
+- Detail cards for Feels Like, Humidity, Wind Speed
 
 ### ❌ Error Handling
 Invalid cities and network errors show a clear error message with a shake animation.
